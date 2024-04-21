@@ -2,11 +2,18 @@ import React from "react";
 
 export default function CartIcon() {
   return (
-    <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="15px"
+      strokeWidth={0.5}
+      height="15px"
+      viewBox="0 0 20 20"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <title>shopping_cart [#1135]</title>
       <desc>Created with Sketch.</desc>
       <defs></defs>
-      <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+      <g id="Page-1" stroke="none" fill="none" fillRule="evenodd">
         <g id="Dribbble-Light-Preview" transform="translate(-220.000000, -3119.000000)" fill="#000000">
           <g id="icons" transform="translate(56.000000, 160.000000)">
             <path

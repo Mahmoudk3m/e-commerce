@@ -1,19 +1,24 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import Navbar from "./components/layout/navbar";
-import Footer from "./components/layout/footer";
+import Navbar from "../components/layout/navbar";
+import Footer from "../components/layout/footer";
 
 const pingAr = localFont({
   src: [
     {
-      path: "../../public/fonts/pingAr/PingAR+LT-Regular.otf",
+      path: "../fonts/pingAr/PingAR+LT-Regular.otf",
       weight: "400",
       style: "normal"
     },
     {
-      path: "../../public/fonts/pingAr/PingAR+LT-Bold.otf",
+      path: "../fonts/pingAr/PingAR+LT-Bold.otf",
       weight: "700",
+      style: "normal"
+    },
+    {
+      path: "../fonts/pingAr/PingAR+LT-Medium.otf",
+      weight: "500",
       style: "normal"
     }
   ]

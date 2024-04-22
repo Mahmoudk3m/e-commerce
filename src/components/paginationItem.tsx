@@ -48,11 +48,21 @@ function PaginationArrow({
   href: string;
 }) {
   const isDisabled = direction === "right" ? currentPage === 1 : currentPage === totalPages;
+
+  if (isDisabled) {
+    return (
+      <div
+        className={`bg-secondary-50 text-primary w-8 h-8 rounded-md flex items-center justify-center cursor-not-allowed
+      `}
+      >
+        {direction === "left" ? "<" : ">"}
+      </div>
+    );
+  }
   return (
     <Link
-      className={`bg-secondary-50 text-primary w-8 h-8 rounded-md flex items-center justify-center ${
-        isDisabled ? "cursor-not-allowed" : "cursor-pointer"
-      }`}
+      className={`bg-secondary-50 text-primary w-8 h-8 rounded-md flex items-center justify-center
+      `}
       href={href}
     >
       {direction === "left" ? "<" : ">"}

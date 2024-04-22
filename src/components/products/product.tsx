@@ -1,14 +1,15 @@
 import { ProductType } from "@/lib/types";
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import Image from "next/image";
 
 export default function Product({ product }: { product: ProductType }) {
   return (
     <div className="rounded-lg border-2 border-gray-50 flex flex-col items-start justify-start md:p-3 p-2 relative">
       <Link href="#" className="block w-full relative mb-4">
         <Image
-          src={product.imageURL}
+          //check first if src has a https
+          src={product.imageURL && product.imageURL.startsWith("http") ? product.imageURL : `/images/placeholder.svg`}
           className="w-full aspect-4/3 object-cover rounded-lg"
           alt="product"
           width={300}

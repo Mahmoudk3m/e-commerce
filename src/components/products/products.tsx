@@ -1,23 +1,41 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Product from "./product";
+import { getProducts } from "@/lib/actions";
+import { ProductType } from "@/lib/types";
+import PaginationItem from "../paginationItem";
 
-const products = [
-  {
-    categoryId: 1,
-    description: "الاصدار الاحدث و الافضل حتى اليوم",
-    id: 1,
-    imageURL: "/images/products/01.png",
-    name: "سماعات apple AirPods Max الاصدار الجديد",
-    price: 2250.0
-  }
-];
+export default async function Products({
+  searchParams
+}: {
+  searchParams?: {
+    query?: string;
+    page?: string;
+  };
+}) {
+  const products = await getProducts();
+  const query = searchParams?.query || "";
+  const currentPage = Number(searchParams?.page) || 1;
 
-export default function Products() {
+  const numberOfProducts = query
+    ? products.filter(
+        (product: ProductType) => product.name && product.name.toLowerCase().includes(query.toLowerCase())
+      ).length
+    : products.length;
+
+  const totalPages = Math.ceil(numberOfProducts / 8);
   return (
-    <div className="grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-2 sm:gap-4">
-      {products.map((product) => (
-        <Product key={product.id} product={product} />
-      ))}
+    <div>
+      <Suspense key={query + currentPage}>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {products
+            .filter((product: ProductType) => product.name && product.name.toLowerCase().includes(query.toLowerCase()))
+            .slice((currentPage - 1) * 8, currentPage * 8)
+            .map((product: ProductType) => (
+              <Product key={product.id} product={product} />
+            ))}
+        </div>
+      </Suspense>
+      <PaginationItem totalPages={totalPages} />
     </div>
   );
 }

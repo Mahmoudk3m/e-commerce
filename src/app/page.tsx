@@ -1,8 +1,15 @@
-import Filters from "@/components/filters";
+// import Filters from "@/components/filters";
 import Products from "@/components/products/products";
 import Search from "@/components/search";
 import Image from "next/image";
-export default function Home() {
+export default function Home({
+  searchParams
+}: {
+  searchParams?: {
+    query?: string;
+    page?: string;
+  };
+}) {
   return (
     <main className="w-full main flex-auto">
       <div className="container">
@@ -18,9 +25,9 @@ export default function Home() {
           </div>
           <div className="flex items-center justify-between gap-4 mb-4">
             <Search />
-            <Filters />
+            {/* <Filters /> */}
           </div>
-          <Products />
+          <Products searchParams={searchParams} />
         </div>
       </div>
     </main>

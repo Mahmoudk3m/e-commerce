@@ -3,6 +3,7 @@ import Link from "next/link";
 import React from "react";
 import UserIcon from "../icons/user";
 import CartIcon from "../icons/cart";
+import { cookies } from "next/headers";
 
 export default function Navbar() {
   return (
@@ -28,13 +29,15 @@ export default function Navbar() {
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <Link
-                href="/login"
-                type="button"
-                className="w-[40px] h-[40px] rounded-full text-center flex items-center justify-center bg-secondary-50 text-primary"
-              >
-                <UserIcon />
-              </Link>
+              {cookies().get("token") ? null : (
+                <Link
+                  href="/login"
+                  type="button"
+                  className="w-[40px] h-[40px] rounded-full text-center flex items-center justify-center bg-secondary-50 text-primary"
+                >
+                  <UserIcon />
+                </Link>
+              )}
               <Link
                 href="/cart"
                 type="button"

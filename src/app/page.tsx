@@ -2,7 +2,14 @@
 import Products from "@/components/products/products";
 import Search from "@/components/search";
 import Image from "next/image";
-export default function Home({
+
+export const metadata = {
+  name: "home",
+  title: "Home",
+  description: "Home page"
+};
+
+export default function Page({
   searchParams
 }: {
   searchParams?: {

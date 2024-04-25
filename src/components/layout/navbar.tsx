@@ -18,12 +18,7 @@ export default function Navbar() {
                 href="/"
                 className="block w-[80px] h-[80px] bg-gray-50 p-2 rounded-full border-4 border-secondary-50"
               >
-                <Image
-                  width={200}
-                  height={200}
-                  src="https://cdn.salla.network/images/logo/logo-square.png"
-                  alt="Logo"
-                />
+                <Image width={200} height={200} src="/images/logo.svg" alt="Logo" />
               </Link>
               <div className="flex flex-col">
                 <h1 className="text-xl">متجر التجربة الجميلة</h1>

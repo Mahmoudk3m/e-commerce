@@ -12,11 +12,13 @@ export const metadata = {
 
 export default async function Page() {
   const token = cookies().get("token");
-  const data = await getCartItems(token?.value || "");
 
   if (!token) {
     redirect("/login");
   }
+
+  const data = await getCartItems(token?.value || "");
+
   return (
     <main className="w-full flex-auto">
       <div className="container">

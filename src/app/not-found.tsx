@@ -12,6 +12,7 @@ export default function NotFound() {
           src="/images/not-found.gif"
           className="my-16 aspect-video rounded-lg"
           alt="not found image"
+          unoptimized
         />
         <Link className="text-lg md:text-2xl p-4 bg-secondary-50 rounded-lg" href="/">
           Return To Home

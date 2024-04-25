@@ -4,6 +4,8 @@ import React from "react";
 import UserIcon from "../icons/user";
 import CartIcon from "../icons/cart";
 import { cookies } from "next/headers";
+import Logout from "../icons/logout";
+import { signOut } from "@/lib/actions";
 
 export default function Navbar() {
   return (
@@ -29,11 +31,20 @@ export default function Navbar() {
               </div>
             </div>
             <div className="flex items-center gap-4">
-              {cookies().get("token") ? null : (
+              {cookies().get("token") ? (
+                <form action={signOut}>
+                  <button
+                    className="p-3 rounded-full text-center flex items-center justify-center bg-secondary-50 text-primary cursor-pointer"
+                    type="submit"
+                  >
+                    <Logout />
+                  </button>
+                </form>
+              ) : (
                 <Link
                   href="/login"
                   type="button"
-                  className="w-[40px] h-[40px] rounded-full text-center flex items-center justify-center bg-secondary-50 text-primary"
+                  className="p-3 rounded-full text-center flex items-center justify-center bg-secondary-50 text-primary"
                 >
                   <UserIcon />
                 </Link>
@@ -41,7 +52,7 @@ export default function Navbar() {
               <Link
                 href="/cart"
                 type="button"
-                className="w-[40px] h-[40px] rounded-full text-center flex items-center justify-center bg-secondary-50 text-primary"
+                className="p-3 rounded-full text-center flex items-center justify-center bg-secondary-50 text-primary"
               >
                 <CartIcon />
               </Link>

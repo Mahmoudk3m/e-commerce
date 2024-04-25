@@ -7,6 +7,12 @@ export type ProductType = {
   price: number;
 };
 
+export type CartItemType = {
+  id: number;
+  product: ProductType;
+  quantity: number;
+};
+
 export type FormState =
   | {
       errors?: {

@@ -1,6 +1,12 @@
 import LoginForm from "@/components/auth/loginForm";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export default async function Page() {
+  //if user is already logged in, redirect to home page
+  if (cookies().get("token")) {
+    redirect("/");
+  }
   return (
     <main className="w-full flex-auto">
       <div className="container">

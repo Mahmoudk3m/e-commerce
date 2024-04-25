@@ -1,4 +1,5 @@
 import { signIn } from "@/lib/actions";
+import Link from "next/link";
 import React from "react";
 
 export default function LoginForm() {
@@ -29,9 +30,9 @@ export default function LoginForm() {
       </div>
       <div className="flex gap-4">
         <button className="w-full bg-primary text-secondary flex-1 p-2 text-md rounded-md">دخول</button>
-        <button type="button" className="w-fit text-primary underline p-2 text-md rounded-md">
-          نسيت كلمة المرور؟
-        </button>
+        <Link href={"/register"} className="w-fit text-primary p-2 text-md">
+          ليس لديك حساب ؟
+        </Link>
       </div>
     </form>
   );

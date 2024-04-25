@@ -10,15 +10,15 @@ export default async function Product({ product }: { product: ProductType }) {
 
   const addToCartWithData = addToCart.bind(null, product.id, product.id, 1, token);
 
-  const cart = await getCartItems(token);
-  const cartItems = cart.cartItems;
-  const item = cartItems.find((item: CartItemType) => item.product.id === product.id);
+  const cart = token && (await getCartItems(token));
+  const cartItems = cart?.cartItems;
+  const item = cartItems?.find((item: CartItemType) => item.product.id === product.id);
 
   const updateCartWithData = item && UpdateCart.bind(null, item.id, item.product.id, item.quantity + 1, token);
 
   return (
     <div className="rounded-lg border-2 border-gray-50 flex flex-col items-start justify-start md:p-3 p-2 relative">
-      <Link href="#" className="block w-full relative mb-4">
+      <Link href={`/product/${product.id}`} className="block w-full relative mb-4">
         <Image
           //check first if src has a https
           src={product.imageURL && product.imageURL.startsWith("http") ? product.imageURL : `/images/placeholder.svg`}
@@ -39,11 +39,20 @@ export default async function Product({ product }: { product: ProductType }) {
       <div className="flex flex-col sm:flex-row items-center justify-center w-full my-4 gap-0 sm:gap-2">
         <span className="font-medium text-md">{`${product.price} SAR`}</span>
       </div>
-      <form action={item ? updateCartWithData : addToCartWithData}>
-        <button type="submit" className="w-full bg-primary text-white p-2 text-md rounded-md">
+      {token ? (
+        <form className="w-full" action={item ? updateCartWithData : addToCartWithData}>
+          <button type="submit" className="w-full bg-primary text-white p-2 text-md rounded-md">
+            إضافة للسلة
+          </button>
+        </form>
+      ) : (
+        <Link
+          className="w-full flex flex-row items-center justify-center bg-primary text-white p-2 text-md rounded-md"
+          href={"/login"}
+        >
           إضافة للسلة
-        </button>
-      </form>
+        </Link>
+      )}
     </div>
   );
 }

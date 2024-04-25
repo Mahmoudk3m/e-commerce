@@ -32,7 +32,6 @@ export default function Page({
           </div>
           <div className="flex items-center justify-between gap-4 mb-4">
             <Search />
-            {/* <Filters /> */}
           </div>
           <Products searchParams={searchParams} />
         </div>

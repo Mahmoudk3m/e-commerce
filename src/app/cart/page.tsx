@@ -2,6 +2,7 @@ import CartItem from "@/components/cart/cartItem";
 import { getCartItems } from "@/lib/actions";
 import { CartItemType } from "@/lib/types";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export const metadata = {
   name: "cart",
@@ -13,6 +14,9 @@ export default async function Page() {
   const token = cookies().get("token");
   const data = await getCartItems(token?.value || "");
 
+  if (!token) {
+    redirect("/login");
+  }
   return (
     <main className="w-full flex-auto">
       <div className="container">
@@ -25,23 +29,27 @@ export default async function Page() {
               data.cartItems.map((cartItem: CartItemType) => <CartItem key={cartItem.id} cartItem={cartItem} />)}
             {data.cartItems.length === 0 && (
               <li className="flex items-center justify-center h-32">
-                <span>لا يوجد منتجات في السلة</span>
+                <span className="text-4xl">لا يوجد منتجات في السلة</span>
               </li>
             )}
           </ul>
-          <div className="flex items-center justify-between px-4 py-8 border-gray-100 border-t border-b-1">
-            <h3 className="font-bold text-xl">اجمالي السلة</h3>
-            <span className="text-xl font-bold">{data.totalCost || 0}</span>
-          </div>
-          <button
-            type="button"
-            className={`w-full bg-primary text-white p-3 text-md rounded-md ${
-              data.cartItems.length === 0 ? "cursor-not-allowed" : "hover:bg-primary-dark"
-            }`}
-            disabled={data.cartItems.length === 0}
-          >
-            اتمام عملية الدفع
-          </button>
+          {data.cartItems.length > 0 && (
+            <div className="flex items-center justify-between px-4 py-8 border-gray-100 border-t border-b-1">
+              <h3 className="font-bold text-xl">اجمالي السلة</h3>
+              <span className="text-xl font-bold">{data.totalCost || 0}</span>
+            </div>
+          )}
+          {data.cartItems.length > 0 && (
+            <button
+              type="button"
+              className={`w-full bg-primary text-white p-3 text-md rounded-md ${
+                data.cartItems.length === 0 ? "cursor-not-allowed" : "hover:bg-primary-dark"
+              }`}
+              disabled={data.cartItems.length === 0}
+            >
+              اتمام عملية الدفع
+            </button>
+          )}
         </div>
       </div>
     </main>

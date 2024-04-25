@@ -34,7 +34,7 @@ export default function Navbar() {
               {cookies().get("token") ? (
                 <form action={signOut}>
                   <button
-                    className="p-3 rounded-full text-center flex items-center justify-center bg-secondary-50 text-primary cursor-pointer"
+                    className="p-3 rounded-full text-center flex flex-row items-center justify-center bg-secondary-50 text-primary cursor-pointer"
                     type="submit"
                   >
                     <Logout />

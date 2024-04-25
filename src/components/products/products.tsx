@@ -3,6 +3,7 @@ import Product from "./product";
 import { getProducts } from "@/lib/actions";
 import { ProductType } from "@/lib/types";
 import PaginationItem from "../paginationItem";
+import { CardSkeleton } from "../skeletons";
 
 export default async function Products({
   searchParams
@@ -31,7 +32,9 @@ export default async function Products({
             .filter((product: ProductType) => product.name && product.name.toLowerCase().includes(query.toLowerCase()))
             .slice((currentPage - 1) * 8, currentPage * 8)
             .map((product: ProductType) => (
-              <Product key={product.id} product={product} />
+              <Suspense key={product.id} fallback={<CardSkeleton />}>
+                <Product key={product.id} product={product} />
+              </Suspense>
             ))}
         </div>
       </Suspense>

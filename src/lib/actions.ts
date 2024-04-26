@@ -1,6 +1,6 @@
 "use server";
 import { cookies } from "next/headers";
-import { SignInFormSchema } from "./schemas";
+import { SignInFormSchema, SignUpFormSchema } from "./schemas";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { CartItemType, ProductType } from "./types";
@@ -70,7 +70,7 @@ export async function deleteCartItem(id: number, token: string) {
   }
 }
 
-export async function signIn(formData: FormData) {
+export async function signIn(prevState: any, formData: FormData) {
   const validatedFields = SignInFormSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password")
@@ -95,11 +95,46 @@ export async function signIn(formData: FormData) {
 
     redirect("/");
   } catch {
-    return { message: "Login failed" };
+    return {
+      message: "كلمة المرور أو البريد الاكتروني غير صحيح"
+    };
   }
 }
 
 export async function signOut() {
   cookies().set("token", "", { expires: new Date(0) });
   redirect("/");
+}
+
+export async function signUp(prevState: any, formData: FormData) {
+  const validatedFields = SignUpFormSchema.safeParse({
+    email: formData.get("email"),
+    firstName: formData.get("firstName"),
+    lastName: formData.get("lastName"),
+    password: formData.get("password"),
+    confirmPassword: formData.get("confirmPassword")
+  });
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors
+    };
+  }
+
+  try {
+    const res = await fetch(`${process.env.BASE_URL}/user/signUp`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(validatedFields.data)
+    });
+
+    const data = await res.json();
+    cookies().set("token", data.token);
+
+    redirect("/");
+  } catch {
+    return { message: "Registration failed" };
+  }
 }

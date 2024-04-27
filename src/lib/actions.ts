@@ -87,10 +87,11 @@ export async function signIn(prevState: any, formData: FormData) {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(validatedFields.data)
+      body: JSON.stringify({ ...validatedFields.data, email: validatedFields.data.email.toLowerCase() })
     });
 
     const data = await res.json();
+    console.log(data);
     cookies().set("token", data.token);
 
     redirect("/");
@@ -122,15 +123,16 @@ export async function signUp(prevState: any, formData: FormData) {
   }
 
   try {
-    const res = await fetch(`${process.env.BASE_URL}/user/signUp`, {
+    const res = await fetch(`${process.env.BASE_URL}/user/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(validatedFields.data)
+      body: JSON.stringify({ ...validatedFields.data, email: validatedFields.data.email.toLowerCase() })
     });
 
     const data = await res.json();
+    console.log(data, "datasignup");
     cookies().set("token", data.token);
 
     redirect("/");
